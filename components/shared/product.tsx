@@ -73,10 +73,10 @@ const delFav = (productId: string) => {
         className='h-96 flex flex-col  group'
       >
         <div className='relative max-h-80 flex-1'>
-        <Image  width={500} height={500} key={item._id} src={`${baseURL}/${item.images?.[0]}`} alt="Mahsulot rasmi" className="m-3" />
+        <Image  width={500} height={500}  key={item._id} src={`${baseURL}/${item.images?.[0]}`} alt="Mahsulot rasmi" className=" absolute h-[100%] " />
         </div>
 
-        <h3 className='tracking-widest text-indigo-500 text-xs font-medium title-font'>
+        <h3 className='tracking-widest text-indigo-500 text-xs font-medium title-font mt-5'>
           {item?.category}
         </h3>
         <div className='font-semibold flex items-center justify-between mt-4 mb-1'>

@@ -37,7 +37,7 @@ export default function ProductCard() {
         {data.map((elem) => (
           <CarouselItem key={elem._id} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div className="p-1">
-              <Card className='w-[100%]'>
+              <Card className='w-[100%] border-0'>
                 <CardContent className="flex aspect-square elems-center justify-center p-6">
                   <Product item={elem} page={'home'}  />
                 </CardContent>

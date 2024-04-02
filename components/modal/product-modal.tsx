@@ -15,6 +15,7 @@ import { baseURL } from '../../lib/config';
 export default function ProductModal() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const addProductModal = useAddProduct();
+  const [isLoading, setIsLoading] = useState(false)
 
   const [product, setProduct] = useState<any>({
     name: "",
@@ -48,6 +49,7 @@ export default function ProductModal() {
   };
 
   const voala = () => {
+    setIsLoading(true)
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("brand", product.brand);
@@ -69,7 +71,7 @@ export default function ProductModal() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        setIsLoading(false)
         toast.promise(promise, {
           loading: 'Loading...',
           success: 'Successfully add!',
@@ -77,7 +79,7 @@ export default function ProductModal() {
         })
         addProductModal.onClose();
       }).catch((error) => {
-        console.log(error);
+        toast.error("Something went wrong!")
       })
   };
 
@@ -155,7 +157,7 @@ export default function ProductModal() {
   const footer = (
     <div className="flex justify-end">
       <Button type="submit" onClick={voala}>
-        Add
+        {isLoading ? "...": "Add"}
       </Button>
     </div>
   );
