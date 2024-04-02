@@ -24,6 +24,7 @@ import { toast } from 'sonner';
 export default function LoginModal() {
   const router = useRouter()
   const loginModal = useLoginModal();
+  const [isLoading, setIsLoading] = useState(false)
   const [client, setClient] = useState<any>({
     email: '',
     password: ''
@@ -37,18 +38,19 @@ export default function LoginModal() {
   }, [loginModal]);
 
   const handleSetCookie = () => {
+    setIsLoading(true)
     axios.post(`${baseURL}/auth/login`, client)
     .then(response => {      
-        console.log(response.data); // Javobni tekshirish
         Cookies.set('yourCookieKey', JSON.stringify(response.data), { expires: 7 });
         toast.success('Login successful'); // Toast chiqarish
         router.push('/');
         loginModal.onClose();
         window.location.reload();
+        setIsLoading(false)
     })
     .catch(error => {
-        console.error(error); 
-        toast.error('Error during login, wrong email or password'); 
+      setIsLoading(false)
+      toast.error('Error during login, wrong email or password'); 
     });
 };
   
@@ -83,7 +85,7 @@ export default function LoginModal() {
 
   const footer = (
     <div>
-      <div className="flex justify-end"><Button type="submit" onClick={handleSetCookie}>Login</Button></div>
+      <div className="flex justify-end"><Button type="submit" onClick={handleSetCookie}>{isLoading ? "Loading..." : "Login"}</Button></div>
       <h1 className="text-sm text-center underine">Do not yet have an account? <Link href='/register' onClick={onCloseLoginModal}>Register</Link> now</h1>
     </div>
   )

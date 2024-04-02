@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 export default function RegisterPage() {
   const loginModal = useLoginModal();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false)
   const [client, setClient] = useState<User>({
     name: '',
     email: '',
@@ -28,15 +29,16 @@ export default function RegisterPage() {
     setClient({ ...client, [e.target.name]: e.target.value });    
   };
   const handleSetCookie = () => {
+    setIsLoading(true)
     axios.post(`${baseURL}/auth/signup`, client)
     .then(response => {
-      console.log('Response:', response);
+      setIsLoading(false)
       Cookies.set('yourCookieKey', JSON.stringify(response.data), { expires: 7 });
       router.push('/');
       toast.success('Registration successful'); 
     }).catch(error => {
       // Handle errors
-      console.error('Error:', error);
+      setIsLoading(false)
       toast.error('Error during signup, check your data'); 
     });
 };
@@ -91,7 +93,7 @@ export default function RegisterPage() {
                 onChange={changeHandler}
               />
             </div>
-            <div className='self-end'><Button type="submit" onClick={handleSetCookie}>Register</Button></div>
+            <div className='self-end'><Button type="submit" onClick={handleSetCookie}>{isLoading ? "Loading...":"Register"}</Button></div>
             <div className='self-center text-muted-foreground font-mono mt-[-25px] flex items-center'>
               Already have an account? <Button variant={'link'} className='mx-0 p-1' onClick={onOpenLoginModal}>Login</Button>  now
             </div>

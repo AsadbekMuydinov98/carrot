@@ -13,6 +13,7 @@ import { baseURL } from '../../../../lib/config';
 
 export default function EditPage() {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
   const [kuki, setKuki] = useState<string | object | Token>("");
   const [product, setProduct] = useState<any>({
     _id: '',
@@ -56,6 +57,7 @@ export default function EditPage() {
   };
 
   const voala = () => {
+    setIsLoading(true)
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("brand", product.brand);
@@ -79,7 +81,7 @@ export default function EditPage() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        setIsLoading(false)
         toast.promise(promise, {
           loading: 'Loading...',
           success: 'Successfully updated',
@@ -87,7 +89,8 @@ export default function EditPage() {
         })
         router.push('/myproducts')
       }).catch((error) => {
-        console.log(error);
+        setIsLoading(false)
+        toast.error('Something went wrong!')
       })
   }
 
@@ -157,7 +160,7 @@ export default function EditPage() {
         <Input type="file" className="col-span-3" name="images" multiple onChange={handleFileChange} defaultValue={product?.images}/>
       </div>
       <div className="flex justify-end">
-        <Button className="px-10" onClick={voala}>Update</Button>
+        <Button className="px-10" onClick={voala}>{isLoading ? "Updating..." : "Update"}</Button>
       </div>
     </div>
   )

@@ -80,6 +80,7 @@ export default function ProductModal() {
         addProductModal.onClose();
       }).catch((error) => {
         toast.error("Something went wrong!")
+        setIsLoading(false)
       })
   };
 
