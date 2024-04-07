@@ -36,7 +36,7 @@ export default function DetailedPage() {
                 <div className="p-1">
                   <Card className='w-[100%]'>
                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <Image  width={45} height={45} key={image} src={`${baseURL}/${image}`} alt="Products' image" className="m-3 h-[300px]" />
+                      <Image  width={45} height={45} key={image} src={`${baseURL}/${image}`} alt="Products' image" className="p-0 h-[300px]" />
                     </CardContent>
                   </Card>
                 </div>
